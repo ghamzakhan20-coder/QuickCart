@@ -12,12 +12,12 @@ export const syncUserCreation = inngest.createFunction(
     },
     { event: 'clerk/user.created' },
     async ({ event }) => {
-        const { id, first_name, last_name, email_addresses, Image_url } = event.data
+        const { id, first_name, last_name, email_addresses, image_url } = event.data
         const userData = {
             _id: id,
-            email: email_addresses[0].email.address,
+            email: email_addresses[0].email_address,
             name: first_name + ' ' + last_name,
-            imageUrl: Image_url
+            imageUrl: image_url
         }
         await connectDB()
         await User.create(userData)
@@ -31,12 +31,12 @@ export const syncUserUpdation = inngest.createFunction(
     },
     { event: 'clerk/user.updated' },
     async ({ event }) => {
-        const { id, first_name, last_name, email_addresses, Image_url } = event.data
+        const { id, first_name, last_name, email_addresses, image_url } = event.data
         const userData = {
             _id: id,
-            email: email_addresses[0].email.address,
+            email: email_addresses[0].email_address,
             name: first_name + ' ' + last_name,
-            imageUrl: Image_url
+            imageUrl: image_url
         }
         await connectDB()
         await User.findByIdAndUpdate(id, userData)
